@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import JogoDaMemoriaContext from "./context";
+import JogoDaMemoriaContext from "../../contexts/JogoDaMemoriaContext";
 import Resultado from "./Resultado";
 import ColunaDaCarta from "./ColunaDaCarta";
 

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import JogoDaMemoriaContext, { NIVEIS, Nivel } from "../JogoDaMemoria/context";
+import JogoDaMemoriaContext, { NIVEIS, Nivel } from "../../contexts/JogoDaMemoriaContext";
 import { Button, Col, Row } from "react-bootstrap";
 
 const SeletorDeNivel = () => {

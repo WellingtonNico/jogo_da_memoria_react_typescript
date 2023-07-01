@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { embaralharLista } from "../../helpers/listas";
+import { embaralharLista } from "../helpers/listas";
 
 export const NIVEIS = {
   Fácil: 4,

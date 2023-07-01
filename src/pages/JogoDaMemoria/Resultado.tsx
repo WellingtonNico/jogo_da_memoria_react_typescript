@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import JogoDaMemoriaContext from "./context";
+import JogoDaMemoriaContext from "../../contexts/JogoDaMemoriaContext";
 
 const Resultado = () => {
   const contexto = useContext(JogoDaMemoriaContext);

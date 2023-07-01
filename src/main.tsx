@@ -3,10 +3,9 @@ import ReactDOM from "react-dom/client";
 import JogoDaMemoria from "./pages/JogoDaMemoria";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import JogoDaMemoriaContext, {
   JogoDaMemoriaContextProvider,
-} from "./pages/JogoDaMemoria/context";
+} from "./contexts/JogoDaMemoriaContext";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import SeletorDeNivel from "./pages/SelecionarNivel";
 

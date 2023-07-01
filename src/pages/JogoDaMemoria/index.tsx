@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import JogoDaMemoriaContext from "./context";
+import JogoDaMemoriaContext from "../../contexts/JogoDaMemoriaContext";
 import { Button, Col, Row } from "react-bootstrap";
 import ConteudoPrincipal from "./ConteudoPrincipal";
 

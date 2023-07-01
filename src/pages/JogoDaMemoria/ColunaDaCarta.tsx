@@ -1,6 +1,6 @@
 import { CSSProperties, useContext, useState } from "react";
 import { Col } from "react-bootstrap";
-import JogoDaMemoriaContext from "./context";
+import JogoDaMemoriaContext from "../../contexts/JogoDaMemoriaContext";
 
 const tamanho = {
   height: '10vh',
