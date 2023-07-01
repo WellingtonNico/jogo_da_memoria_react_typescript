@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import JogoDaMemoriaContext, { NIVEIS, Nivel } from "../JogoDaMemoria/context";
 import { Button, Col, Row } from "react-bootstrap";
 
