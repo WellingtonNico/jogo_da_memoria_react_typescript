@@ -6,7 +6,7 @@ type JogoDaMemoriaContextType = {
   erros: number
   acertos: number
   exibirCarta: (id: number) => void
-  reiniciarJogo: () => void
+  iniciarJogo: (letras: string[]) => void
 }
 
 
@@ -57,21 +57,30 @@ export const JogoDaMemoriaContextProvider = ({ children }: PropsWithChildren) =>
   }
 
   // exibe uma carta por vez por um determinado tempo
-  const exibirCartasDoJogo = (lista:Carta[],index:number=0) => {
-    if(index > cartas.length){
-      setCartas(lista.map(c=>({...c,exibida:false})))
+  const exibirCartasDoJogo = (lista: Carta[], index: number = 0) => {
+    if (index > cartas.length) {
+      setCartas(lista.map(c => ({ ...c, exibida: false })))
       cliqueBloqueado = false
     }
-    setCartas(lista.map((carta,i)=>({...carta,exibida:index==i})))
-    setTimeout(()=>{
+    setCartas(lista.map((carta, i) => ({ ...carta, exibida: index == i })))
+    setTimeout(() => {
       // apos um tempo vai para próxima carta até acabar todas
-      exibirCartasDoJogo(lista,index + 1)
-    },200)
+      exibirCartasDoJogo(lista, index + 1)
+    }, 200)
   }
 
-  const reiniciarJogo = () => {
+  const montarListaDeCartas = (letras: string[]) => {
+    const novaListaDeCartas: Carta[] = []
+    letras.forEach(letra => {
+      novaListaDeCartas.push({ id: novaListaDeCartas.length + 1, descoberta: false, exibida: false, letra })
+      novaListaDeCartas.push({ id: novaListaDeCartas.length + 1, descoberta: false, exibida: false, letra })
+    })
+    return novaListaDeCartas
+  }
+
+  const iniciarJogo = (letras: string[]) => {
     cliqueBloqueado = true
-    const novaLista = cartas.map(c => ({ ...c, descoberta: false, exibida: false }))
+    const novaLista = montarListaDeCartas(letras)
     const listaEmbaralhada = embaralharLista(novaLista)
     setErros(0)
     setAcertos(0)
@@ -84,7 +93,7 @@ export const JogoDaMemoriaContextProvider = ({ children }: PropsWithChildren) =>
     exibirCarta,
     acertos,
     erros,
-    reiniciarJogo
+    iniciarJogo
   }
 
 
