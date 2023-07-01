@@ -1,4 +1,5 @@
 import { PropsWithChildren, createContext, useState } from "react";
+import { embaralharLista } from "../../helpers/listas";
 
 
 type JogoDaMemoriaContextType = {
@@ -13,11 +14,13 @@ type JogoDaMemoriaContextType = {
 const JogoDaMemoriaContext = createContext<JogoDaMemoriaContextType>({} as JogoDaMemoriaContextType);
 
 
-export const JogoDaMemoriaContextProvider = ({ children }: PropsWithChildren) => {
+// variáveis de controle que não precisam afetar o estado
+var cliqueBloqueado = false
+var cartaExibida: Carta | null = null
 
-  // variáveis de controle que não precisam afetar o estado
-  var cliqueBloqueado = false
-  var cartaExibida: Carta | null = null
+
+export const JogoDaMemoriaContextProvider = ({ children }: PropsWithChildren) => {
+  
 
   const [acertos, setAcertos] = useState(0)
   const [erros, setErros] = useState(0)
@@ -49,24 +52,25 @@ export const JogoDaMemoriaContextProvider = ({ children }: PropsWithChildren) =>
       setCartas(lista => lista.map(c => c.id === cartaParaVirar.id ? { ...c, exibida: true } : c))
       setErros(p => p + 1)
       setTimeout(() => {
-        setCartas(lista => lista.map(c => c.id === cartaParaVirar.id ? { ...c, exibida: false } : c))
+        setCartas(lista => lista.map(c => c.descoberta === false ? { ...c, exibida: false } : c))
         cartaExibida = null
         cliqueBloqueado = false
-      }, 2000)
+      }, 1200)
     }
   }
 
   // exibe uma carta por vez por um determinado tempo
   const exibirCartasDoJogo = (lista: Carta[], index: number = 0) => {
-    if (index > cartas.length) {
+    if (index > lista.length) {
       setCartas(lista.map(c => ({ ...c, exibida: false })))
       cliqueBloqueado = false
+      return
     }
     setCartas(lista.map((carta, i) => ({ ...carta, exibida: index == i })))
     setTimeout(() => {
       // apos um tempo vai para próxima carta até acabar todas
       exibirCartasDoJogo(lista, index + 1)
-    }, 200)
+    }, 400)
   }
 
   const montarListaDeCartas = (letras: string[]) => {
@@ -79,13 +83,13 @@ export const JogoDaMemoriaContextProvider = ({ children }: PropsWithChildren) =>
   }
 
   const iniciarJogo = (letras: string[]) => {
+    if(cliqueBloqueado) return
     cliqueBloqueado = true
     const novaLista = montarListaDeCartas(letras)
     const listaEmbaralhada = embaralharLista(novaLista)
     setErros(0)
     setAcertos(0)
     exibirCartasDoJogo(listaEmbaralhada)
-    cliqueBloqueado = false
   }
 
   const value = {
