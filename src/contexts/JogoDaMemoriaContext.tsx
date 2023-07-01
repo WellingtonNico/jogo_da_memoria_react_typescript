@@ -34,6 +34,7 @@ const JogoDaMemoriaContext = createContext<JogoDaMemoriaContextType>(
 // variáveis de controle que não precisam afetar o estado
 var cliqueBloqueado = false;
 var cartaExibida: Carta | null = null;
+var pararAnimacao = false
 
 export const JogoDaMemoriaContextProvider = ({
   children,
@@ -48,6 +49,7 @@ export const JogoDaMemoriaContextProvider = ({
     // retorna os demais itens ao estado inicial
     if (nivelSelecionado === null) {
       cartaExibida = null;
+      pararAnimacao = true;
       cliqueBloqueado = false;
     }
   }, [nivelSelecionado]);
@@ -106,14 +108,15 @@ export const JogoDaMemoriaContextProvider = ({
 
   // exibe uma carta por vez por um determinado tempo
   const exibirCartasDoJogo = (lista: Carta[], index: number = 0) => {
-    if (index > lista.length || nivelSelecionado === null) {
+    if (index > lista.length || nivelSelecionado === null || pararAnimacao) {
       setCartas(lista.map((c) => ({ ...c, exibida: false })));
       cliqueBloqueado = false;
+      pararAnimacao = true
       return;
     }
     setCartas(lista.map((carta, i) => ({ ...carta, exibida: index == i })));
-    setTimeout(() => {
-      if (nivelSelecionado === null) return;
+    setTimeout(function () {
+      if (pararAnimacao) return;
       // apos um tempo vai para próxima carta até acabar todas
       exibirCartasDoJogo(lista, index + 1);
     }, 400);
@@ -147,6 +150,7 @@ export const JogoDaMemoriaContextProvider = ({
 
   const iniciarJogo = () => {
     if (cliqueBloqueado) return;
+    pararAnimacao = false
     setJogoEncerrado(false);
     cliqueBloqueado = true;
     const novaLista = montarListaDeCartas();
