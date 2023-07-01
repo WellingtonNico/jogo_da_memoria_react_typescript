@@ -1,73 +1,59 @@
 import { useContext } from "react";
 import JogoDaMemoriaContext from "./context";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import ColunaDaCarta from "./ColunaDaCarta";
+import { Button, Col, Row } from "react-bootstrap";
+import ConteudoPrincipal from "./ConteudoPrincipal";
 
 function JogoDaMemoria() {
   const contexto = useContext(JogoDaMemoriaContext);
 
   return (
-    <Container className="text-center" fluid>
+    <>
+      <div>
+        <strong className="mx-2 text-secondary">
+          Nível: {contexto.nivelSelecionado}
+        </strong>
+
+        <strong className="mx-2 text-success">
+          Acertos: {contexto.acertos}
+        </strong>
+
+        <strong className="mx-2 text-danger">Erros: {contexto.erros}</strong>
+
+        <strong className="mx-2 text-primary">
+          Tentativas: {contexto.erros + contexto.acertos}
+        </strong>
+      </div>
+
       <br />
-      <h2>Jogo da Memória - react typescript</h2>
       <br />
 
       <Row className="justify-content-center">
-        <Col xs="12" sm="10" md="8">
-          <Card>
-            <Card.Body>
-              <div>
-                <strong className="mx-2 text-success">
-                  Acertos: {contexto.acertos}
-                </strong>
+        <ConteudoPrincipal />
+      </Row>
 
-                <strong className="mx-2 text-danger">
-                  Erros: {contexto.erros}
-                </strong>
+      <br />
+      <br />
 
-                <strong className="mx-2 text-primary">
-                  Tentativas: {contexto.erros + contexto.acertos}
-                </strong>
-              </div>
+      <Row className="justify-content-between">
+        <Col>
+          <Button
+            onClick={() => contexto.iniciarJogo()}
+            variant="light border border-dark"
+          >
+            Reiniciar
+          </Button>
+        </Col>
 
-              <br />
-              <br />
-
-              <Row className="justify-content-center">
-                {contexto.cartas.map((carta) => (
-                  <ColunaDaCarta key={carta.id} carta={carta} />
-                ))}
-              </Row>
-
-              <br />
-              <br />
-
-              <div className="justify-content-center">
-                <Button
-                  onClick={() =>
-                    contexto.iniciarJogo([
-                      "A",
-                      "B",
-                      "C",
-                      "D",
-                      "E",
-                      "F",
-                      "G",
-                      "H",
-                      "I",
-                      "J",
-                    ])
-                  }
-                  variant="outline-dark"
-                >
-                  {contexto.cartas.length > 0 ? "Reiniciar" : "Iniciar"}
-                </Button>
-              </div>
-            </Card.Body>
-          </Card>
+        <Col>
+          <Button
+            onClick={() => contexto.setNivelSelecionado(null)}
+            variant="outline-dark"
+          >
+            Alterar Nível
+          </Button>
         </Col>
       </Row>
-    </Container>
+    </>
   );
 }
 
