@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import JogoDaMemoria from "./pages/JogoDaMemoria";
-import "./index.css";
+import "./assets/css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import JogoDaMemoriaContext, {
   JogoDaMemoriaContextProvider,
